@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  GymS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: gymschedules
+      AccessControl: PublicRead
+
+  GymS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref GymS3Bucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Sub 'arn:aws:s3:::${GymS3Bucket}/*'
